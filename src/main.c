@@ -22,8 +22,7 @@ int		main(int ac, char **av)
 		exit(-1);
 	}
 	s = init_super(av[1]);
-	print_map(s);
-/*	mlx_hook(M->win, 2, 0, key_press, s);
+	mlx_hook(M->win, 2, 0, key_press, s);
 	mlx_hook(M->win, 3, 0, key_release, s);
 	mlx_hook(M->win, 4, 0, mouse_press, s);
 	mlx_hook(M->win, 5, 0, mouse_release, s);
@@ -31,5 +30,5 @@ int		main(int ac, char **av)
 	mlx_hook(M->win, 12, 0, expose_hook, s);
 	mlx_loop_hook(M->mlx, loop_hook, s);
 	mlx_loop(M->mlx);
-*/	return (0);
+	return (0);
 }

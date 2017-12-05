@@ -19,6 +19,10 @@ static t_world	*init_world(char *file)
 	if (!(w = ft_memalloc(sizeof(*w))))
 		exit(-1);
 	load_map(w, file);
+	w->pos_x = w->map_w / 2;
+	w->pos_y = w->map_h / 2;
+	w->dir_x = -1;
+	w->pln_y = 0.66;
 	return (w);
 }
 

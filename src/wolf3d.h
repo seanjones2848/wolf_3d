@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <math.h>
+# include <time.h>
 
 # include <stdio.h>  // FOR DEBUG ONLY TAKE OUT WHEN DONE
 
@@ -28,13 +29,28 @@
 # define M s->mlx
 # define WINDOW_HEIGHT 1000
 # define WINDOW_WIDTH 1000
+# define CEILING_COLOR 0x9400D3
+# define FLOOR_COLOR 0x006400
+# define WALL_COLOR 0xFF8C00
+# define MOVE_COEFF 5.0
+# define ROTATE_COEFF 3.0
+
+enum
+{
+	left,
+	right,
+	fore,
+	back
+}					directions;
 
 typedef struct		s_world
 {
+	int				x;
 	int				hit;
 	int				side;
-	int				time;
-	int				otime;
+	time_t			ctime;
+	time_t			otime;
+	int				ftime;
 	int				**map;
 	int				map_w;
 	int				map_h;
@@ -42,6 +58,11 @@ typedef struct		s_world
 	int				map_y;
 	int				stp_x;
 	int				stp_y;
+	int				lin_h;
+	int				drw_s;
+	int				drw_e;
+	double			cam;
+	double			pwdis;
 	double			pos_x;
 	double			pos_y;
 	double			dir_x;
@@ -58,8 +79,6 @@ typedef struct		s_world
 	double			sds_y;
 	double			dds_x;
 	double			dds_y;
-	double			pwdis;
-	double			cam_x;
 	double			spd_m;
 	double			spd_r;
 }					t_world;
@@ -74,8 +93,7 @@ typedef struct		s_input
 	bool			back;
 	bool			left;
 	bool			right;
-	bool			l_turn;
-	bool			r_turn;
+	bool			draw;
 }					t_input;
 
 typedef struct		s_mlx
@@ -102,6 +120,14 @@ typedef struct		s_super
 t_super				*init_super(char *file);
 void				load_map(t_world *w, char *file);
 int					handle_error(char *file);
+void				recast(t_super *s);
+int					key_press(int key, t_super *s);
+int					key_release(int key, t_super *s);
+int					mouse_press(int key, int x, int y, t_super *s);
+int					mouse_release(int key, int x, int y, t_super *s);
+int					motion_hook(int x, int y, t_super *s);
+int					expose_hook(t_super *s);
+int					loop_hook(t_super *s);
 
 /*
 **	Testing funtions
