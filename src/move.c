@@ -27,7 +27,7 @@ void	move(int dir, t_super *s)
 {
 	if (dir == fore)
 	{
-		if (!W->map[(int)(W->pos_x - W->dir_x * W->spd_m)][(int)(W->pos_y)])
+		if (!W->map[(int)(W->pos_x + W->dir_x * W->spd_m)][(int)(W->pos_y)])
 			W->pos_x += W->dir_x * W->spd_m;
 		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y + W->dir_y * W->spd_m)])
 			W->pos_y += W->dir_y * W->spd_m;
@@ -36,7 +36,7 @@ void	move(int dir, t_super *s)
 	{
 		if (!W->map[(int)(W->pos_x - W->dir_x * W->spd_m)][(int)(W->pos_y)])
 			W->pos_x -= W->dir_x * W->spd_m;
-		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y + W->dir_y * W->spd_m)])
+		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y - W->dir_y * W->spd_m)])
 			W->pos_y -= W->dir_y * W->spd_m;
 	}
 	I->draw = true;
