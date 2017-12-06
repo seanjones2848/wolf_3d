@@ -73,7 +73,7 @@ int			recast(t_super *s)
 	ray_casting(s);
 	W->otime = W->ctime;
 	W->ctime = time(NULL);
-	W->ftime = difftime(W->otime, W->ctime) / 1000;
+	W->ftime = difftime(W->otime, W->ctime);
 	printf("fps: {%f}\n", 1.0 / W->ftime);
 	W->spd_m = W->ftime * MOVE_COEFF;
 	W->spd_r = W->ftime * ROTATE_COEFF;
