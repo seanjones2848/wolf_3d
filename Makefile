@@ -20,7 +20,11 @@ SRC_NAME =	main.c \
 			error.c \
 			init.c \
 			map.c \
-			test.c
+			test.c \
+			move.c \
+			hooks.c \
+			loop_hooks.c \
+			ray_caster.c
 
 SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
 OBJ =	$(SRC_NAME:%.c=%.o)
