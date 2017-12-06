@@ -10,6 +10,8 @@ int	key_press(int key, t_super *s)
 		I->back = true;
 	if (key == KEY_W || key == KEY_UP)
 		I->fore = true;
+	if (key == KEY_ESCAPE)
+		exit(0);
 	return (1);
 }
 
