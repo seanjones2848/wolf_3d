@@ -32,9 +32,9 @@ static void	draw_line(t_super *s)
 	W->y = -1;
 	while (++W->y < M->h)
 	{
-		if (M->h < W->drw_s)
+		if (W->y < W->drw_s)
 			M->data[W->x + M->w * W->y] = CEILING_COLOR;
-		else if (M->h < W->drw_e)
+		else if (W->y < W->drw_e)
 			M->data[W->x + M->w * W->y] = W->side == 0 ? (WALL_COLOR) : (WALL_COLOR / 2);
 		else
 			M->data[W->x + M->w * W->y] = FLOOR_COLOR;
