@@ -46,6 +46,7 @@ enum
 typedef struct		s_world
 {
 	int				x;
+	int				y;
 	int				hit;
 	int				side;
 	time_t			ctime;
@@ -120,7 +121,9 @@ typedef struct		s_super
 t_super				*init_super(char *file);
 void				load_map(t_world *w, char *file);
 int					handle_error(char *file);
-void				recast(t_super *s);
+int					recast(t_super *s);
+void				move(int dir, t_super *s);
+void				turn(int dir, t_super *s);
 int					key_press(int key, t_super *s);
 int					key_release(int key, t_super *s);
 int					mouse_press(int key, int x, int y, t_super *s);
