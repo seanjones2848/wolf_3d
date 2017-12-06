@@ -28,7 +28,6 @@ static void	draw_line(t_super *s)
 	W->drw_s = (-W->lin_h / 2 + M->h / 2) < 0 ? (0) : (-W->lin_h / 2 + M->h / 2);
 	W->drw_e = (W->lin_h / 2 + M->h / 2) >= M->h ? (M->h - 1) :
 		(W->lin_h / 2 + M->h /2);
-	printf("for x{%d} drw_s{%d} drw_e{%d}\n", W->x, W->drw_s, W->drw_e);
 	W->y = -1;
 	while (++W->y < M->h)
 	{
