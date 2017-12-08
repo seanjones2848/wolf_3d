@@ -45,7 +45,7 @@ enum
 	back
 }					directions;
 
-typedef struct		s_thread;
+typedef struct		s_thread
 {
 	int				id;
 	int				x;

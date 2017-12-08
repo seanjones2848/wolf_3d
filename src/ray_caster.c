@@ -24,28 +24,28 @@ static void	dda(t_thread *t)
 
 static void	draw_line(t_thread *t)
 {
-	t->lin_h = (int)(M->h / t->pwdis);
-	t->drw_s = (-t->lin_h / 2 + M->h / 2) < 0 ? (0) : (-t->lin_h / 2 + M->h / 2);
-	t->drw_e = (t->lin_h / 2 + M->h / 2) >= M->h ? (M->h - 1) :
-		(t->lin_h / 2 + M->h /2);
+	t->lin_h = (int)(t->img_h / t->pwdis);
+	t->drw_s = (-t->lin_h / 2 + t->img_h / 2) < 0 ? (0) : (-t->lin_h / 2 + t->img_h / 2);
+	t->drw_e = (t->lin_h / 2 + t->img_h / 2) >= t->img_h ? (t->img_h - 1) :
+		(t->lin_h / 2 + t->img_h /2);
 	t->y = -1;
-	while (++t->y < M->h)
+	while (++t->y < t->img_h)
 	{
 		if (t->y < t->drw_s)
-			M->data[t->x + M->w * t->y] = CEILING_COLOR;
+			t->data[t->x + t->img_w * t->y] = CEILING_COLOR;
 		else if (t->y < t->drw_e)
-			M->data[t->x + M->w * t->y] = t->side == 0 ? (WALL_COLOR) : (WALL_COLOR / 2);
+			t->data[t->x + t->img_w * t->y] = t->side == 0 ? (WALL_COLOR) : (WALL_COLOR / 2);
 		else
-			M->data[t->x + M->w * t->y] = FLOOR_COLOR;
+			t->data[t->x + t->img_w * t->y] = FLOOR_COLOR;
 	}
 }
 
 static void	ray_casting(t_thread *t)
 {
 	t->x = -1;
-	while (++t->x < M->w)
+	while (++t->x < t->img_w)
 	{
-		t->cam = 2 * t->x / (double)M->w - 1;
+		t->cam = 2 * t->x / (double)t->img_w - 1;
 		t->rps_x = t->pos_x;
 		t->rps_y = t->pos_y;
 		t->rdr_x = t->dir_x + t->pln_x * t->cam;
@@ -63,8 +63,8 @@ static void	ray_casting(t_thread *t)
 		t->stp_y = t->rdr_y < 0 ? (-1) : (1);
 		t->hit = 0;
 		t->side = 0;
-		dda(s);
-		draw_line(s);
+		dda(t);
+		draw_line(t);
 	}
 }
 
