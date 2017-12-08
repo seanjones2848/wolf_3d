@@ -2,23 +2,26 @@
 
 void	turn(int dir, t_super *s)
 {
+	double	odr_x;
+	double	opn_x;
+
 	if (dir == left)
 	{
-		W->odr_x = W->dir_x;
+		odr_x = W->dir_x;
 		W->dir_x = W->dir_x * cos(W->spd_r) - W->dir_y * sin(W->spd_r);
-		W->dir_y = W->odr_x * sin(W->spd_r) - W->dir_y * cos(W->spd_r);
-		W->opn_x = W->pln_x;
+		W->dir_y = odr_x * sin(W->spd_r) - W->dir_y * cos(W->spd_r);
+		opn_x = W->pln_x;
 		W->pln_x = W->pln_x * cos(W->spd_r) - W->pln_y * sin(W->spd_r);
-		W->pln_y = W->opn_x * sin(W->spd_r) - W->pln_y * cos(W->spd_r);
+		W->pln_y = opn_x * sin(W->spd_r) - W->pln_y * cos(W->spd_r);
 	}
 	if (dir == right)
 	{
-		W->odr_x = W->dir_x;
+		odr_x = W->dir_x;
 		W->dir_x = W->dir_x * cos(-W->spd_r) - W->dir_y * sin(-W->spd_r);
-		W->dir_y = W->odr_x * sin(-W->spd_r) - W->dir_y * cos(-W->spd_r);
-		W->opn_x = W->pln_x;
+		W->dir_y = odr_x * sin(-W->spd_r) - W->dir_y * cos(-W->spd_r);
+		opn_x = W->pln_x;
 		W->pln_x = W->pln_x * cos(-W->spd_r) - W->pln_y * sin(-W->spd_r);
-		W->pln_y = W->opn_x * sin(-W->spd_r) - W->pln_y * cos(-W->spd_r);
+		W->pln_y = opn_x * sin(-W->spd_r) - W->pln_y * cos(-W->spd_r);
 	}
 	I->draw = true;
 }

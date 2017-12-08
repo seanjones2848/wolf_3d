@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <math.h>
 # include <time.h>
+# include <pthread.h>
 
 # include <stdio.h>  // FOR DEBUG ONLY TAKE OUT WHEN DONE
 
@@ -34,6 +35,7 @@
 # define WALL_COLOR 0xFF8C00
 # define MOVE_COEFF 5.0
 # define ROTATE_COEFF 3.0
+# define THREADS 8
 
 enum
 {
@@ -43,20 +45,20 @@ enum
 	back
 }					directions;
 
-typedef struct		s_world
+typedef struct		s_thread;
 {
+	int				id;
 	int				x;
 	int				y;
 	int				hit;
 	int				side;
-	time_t			ctime;
-	time_t			otime;
-	int				ftime;
 	int				**map;
 	int				map_w;
 	int				map_h;
 	int				map_x;
 	int				map_y;
+	int				img_w;
+	int				img_h;
 	int				stp_x;
 	int				stp_y;
 	int				lin_h;
@@ -68,10 +70,8 @@ typedef struct		s_world
 	double			pos_y;
 	double			dir_x;
 	double			dir_y;
-	double			odr_x;
 	double			pln_x;
 	double			pln_y;
-	double			opn_x;
 	double			rps_x;
 	double			rps_y;
 	double			rdr_x;
@@ -80,6 +80,25 @@ typedef struct		s_world
 	double			sds_y;
 	double			dds_x;
 	double			dds_y;
+	int				*data;
+}					t_thread;
+
+typedef struct		s_world
+{
+	time_t			ctime;
+	time_t			otime;
+	int				ftime;
+	int				**map;
+	int				map_w;
+	int				map_h;
+	int				map_x;
+	int				map_y;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			pln_x;
+	double			pln_y;
 	double			spd_m;
 	double			spd_r;
 }					t_world;
@@ -119,6 +138,7 @@ typedef struct		s_super
 }					t_super;
 
 t_super				*init_super(char *file);
+t_thread			*init_thread(t_super *s, int id);
 void				load_map(t_world *w, char *file);
 int					handle_error(char *file);
 int					recast(t_super *s);

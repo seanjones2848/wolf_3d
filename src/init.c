@@ -63,3 +63,27 @@ t_super			*init_super(char *file)
 	M = init_mlx();
 	return (s);
 }
+
+t_thread		*init_thread(t_super *s, int id)
+{
+	t_thread	*t;
+
+	if (!(t = ft_memalloc(sizeof(*t))))
+		exit(-1);
+	t->id = id;
+	t->map = W->map;
+	t->map_w - W->map_w;
+	t->map_h = W->map_h;
+	t->map_x = W->map_x;//
+	t->map_y = W->map_y;//
+	t->pox_x = W->pos_x;
+	t->pos_y = W->pos_y;
+	t->dir_x = W->dir_x;
+	t->dir_y = W->dir_y;
+	t->pln_x = W->pln_x;
+	t->pln_y = W->pln_y;
+	t->data = M->data;
+	t->img_h = M->h;
+	t->img_w = M->w;
+	return (t);
+}
