@@ -42,8 +42,8 @@ static void	draw_line(t_thread *t)
 
 static void	ray_casting(t_thread *t)
 {
-	t->x = -1;
-	while (++t->x < t->img_w)
+	t->x = (t->img_w / THREADS * (t->id - 1))-1;
+	while (++t->x < t->img_w / THREADS * t->id)
 	{
 		t->cam = 2 * t->x / (double)t->img_w - 1;
 		t->rps_x = t->pos_x;
@@ -96,7 +96,7 @@ int			recast(t_super *s)
 	W->otime = W->ctime;
 	W->ctime = time(NULL);
 	W->ftime = difftime(W->otime, W->ctime);
-	printf("fps: {%f}\n", 1.0 / W->ftime);
+	printf("ftime : {%d} fps: {%f}\n", W->ftime, 1.0 / W->ftime);
 	W->spd_m = W->ftime * MOVE_COEFF;
 	W->spd_r = W->ftime * ROTATE_COEFF;
 	mlx_put_image_to_window(M->mlx, M->win, M->img, 0, 0);
