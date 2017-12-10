@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:06:10 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/02 20:03:35 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/10 12:10:41 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ t_thread		*init_thread(t_super *s, int id)
 		exit(-1);
 	t->id = id;
 	t->map = W->map;
-	t->map_w - W->map_w;
+	t->map_w = W->map_w;
 	t->map_h = W->map_h;
 	t->map_x = W->map_x;//
 	t->map_y = W->map_y;//
-	t->pox_x = W->pos_x;
+	t->pos_x = W->pos_x;
 	t->pos_y = W->pos_y;
 	t->dir_x = W->dir_x;
 	t->dir_y = W->dir_y;

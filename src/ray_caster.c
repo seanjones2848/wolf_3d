@@ -34,7 +34,9 @@ static void	draw_line(t_thread *t)
 		if (t->y < t->drw_s)
 			t->data[t->x + t->img_w * t->y] = CEILING_COLOR;
 		else if (t->y < t->drw_e)
-			t->data[t->x + t->img_w * t->y] = t->side == 0 ? (WALL_COLOR) : (WALL_COLOR / 2);
+			t->data[t->x + t->img_w * t->y] = t->side == 0 ? (WALL_COLOR) :
+			(WALL_COLOR / 2);
+				//				(HALF_COLOR(RED(WALL_COLOR), GREEN(WALL_COLOR), BLUE(WALL_COLOR)));
 		else
 			t->data[t->x + t->img_w * t->y] = FLOOR_COLOR;
 	}
@@ -42,8 +44,8 @@ static void	draw_line(t_thread *t)
 
 static void	ray_casting(t_thread *t)
 {
-	t->x = (t->img_w / THREADS * (t->id - 1))-1;
-	while (++t->x < t->img_w / THREADS * t->id)
+	t->x = (t->img_w / THREADS * (t->id - 1)) - 1;
+	while (++t->x <= (t->img_w / THREADS * t->id) + 1)
 	{
 		t->cam = 2 * t->x / (double)t->img_w - 1;
 		t->rps_x = t->pos_x;
@@ -93,12 +95,6 @@ int			recast(t_super *s)
 	i = -1;
 	while (++i < THREADS)
 		pthread_join(tids[i], NULL);
-	W->otime = W->ctime;
-	W->ctime = time(NULL);
-	W->ftime = difftime(W->otime, W->ctime);
-	printf("ftime : {%d} fps: {%f}\n", W->ftime, 1.0 / W->ftime);
-	W->spd_m = W->ftime * MOVE_COEFF;
-	W->spd_r = W->ftime * ROTATE_COEFF;
 	mlx_put_image_to_window(M->mlx, M->win, M->img, 0, 0);
 	return (1);
 }

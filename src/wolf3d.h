@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 17:11:20 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/02 20:20:28 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/10 14:58:29 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@
 # define MOVE_COEFF 5.0
 # define ROTATE_COEFF 3.0
 # define THREADS 8
+# define FPS 25
+# define SKIP_TICKS (1000 / FPS)
+# define RED(c) c >> 16
+# define GREEN(c) c << 8 >> 16
+# define BLUE(c) c << 16 >> 16
+# define HALF_COLOR(r, g, b) (r / 2 << 16 | g / 2 << 8 | b / 2)
 
 enum
 {
