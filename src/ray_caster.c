@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_caster.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/12/11 15:17:35 by sjones            #+#    #+#             */
+/*   Updated: 2017/12/11 15:18:20 by sjones           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
 static void	dda(t_thread *t)
@@ -25,9 +37,10 @@ static void	dda(t_thread *t)
 static void	draw_line(t_thread *t)
 {
 	t->lin_h = (int)(t->img_h / t->pwdis);
-	t->drw_s = (-t->lin_h / 2 + t->img_h / 2) < 0 ? (0) : (-t->lin_h / 2 + t->img_h / 2);
+	t->drw_s = (-t->lin_h / 2 + t->img_h / 2) < 0 ? (0) :
+		(-t->lin_h / 2 + t->img_h / 2);
 	t->drw_e = (t->lin_h / 2 + t->img_h / 2) >= t->img_h ? (t->img_h - 1) :
-		(t->lin_h / 2 + t->img_h /2);
+		(t->lin_h / 2 + t->img_h / 2);
 	t->y = -1;
 	while (++t->y < t->img_h)
 	{
@@ -35,8 +48,7 @@ static void	draw_line(t_thread *t)
 			t->data[t->x + t->img_w * t->y] = CEILING_COLOR;
 		else if (t->y < t->drw_e)
 			t->data[t->x + t->img_w * t->y] = t->side == 0 ? (WALL_COLOR) :
-			(WALL_COLOR / 2);
-				//				(HALF_COLOR(RED(WALL_COLOR), GREEN(WALL_COLOR), BLUE(WALL_COLOR)));
+			(WALL_DARK);
 		else
 			t->data[t->x + t->img_w * t->y] = FLOOR_COLOR;
 	}

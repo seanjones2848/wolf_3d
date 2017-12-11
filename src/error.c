@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 17:26:02 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/02 20:15:34 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/11 15:17:01 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	row_count(char **row)
 	r = 0;
 	while (row[r])
 		r++;
-	return r;
+	return (r);
 }
 
 static int	check_map(char *file)
@@ -40,7 +40,9 @@ static int	check_map(char *file)
 	char	*row;
 	int		r_len;
 	int		r_len2;
+	int		height;
 
+	height = 0;
 	fd = open(file, O_RDONLY);
 	if (get_next_line(fd, &row) > 0)
 		r_len = row_count(ft_strsplit(row, ' '));
@@ -51,7 +53,10 @@ static int	check_map(char *file)
 		r_len2 = row_count(ft_strsplit(row, ' '));
 		if (r_len != r_len2)
 			return (1);
+		height++;
 	}
+	if (height <= 2)
+		return (1);
 	close(fd);
 	return (0);
 }

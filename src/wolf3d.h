@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 17:11:20 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/10 14:58:29 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/11 14:14:24 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # include <math.h>
 # include <time.h>
 # include <pthread.h>
-
-# include <stdio.h>  // FOR DEBUG ONLY TAKE OUT WHEN DONE
+# include <stdio.h>
+# include <signal.h>
+# include <sys/types.h>
 
 # define W s->world
 # define I s->input
@@ -33,9 +34,10 @@
 # define CEILING_COLOR 0x9400D3
 # define FLOOR_COLOR 0x006400
 # define WALL_COLOR 0xFF8C00
+# define WALL_DARK 0x884600
 # define MOVE_COEFF 5.0
 # define ROTATE_COEFF 3.0
-# define THREADS 8
+# define THREADS 1
 # define FPS 25
 # define SKIP_TICKS (1000 / FPS)
 # define RED(c) c >> 16
@@ -120,6 +122,8 @@ typedef struct		s_input
 	bool			left;
 	bool			right;
 	bool			draw;
+	bool			music;
+	bool			m_choice;
 }					t_input;
 
 typedef struct		s_mlx
@@ -141,6 +145,7 @@ typedef struct		s_super
 	t_world			*world;
 	t_input			*input;
 	t_mlx			*mlx;
+	pid_t			music;
 }					t_super;
 
 t_super				*init_super(char *file);
@@ -157,6 +162,7 @@ int					mouse_release(int key, int x, int y, t_super *s);
 int					motion_hook(int x, int y, t_super *s);
 int					expose_hook(t_super *s);
 int					loop_hook(t_super *s);
+int					handle_music(t_super *s);
 
 /*
 **	Testing funtions

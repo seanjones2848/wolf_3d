@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/12/11 15:18:48 by sjones            #+#    #+#             */
+/*   Updated: 2017/12/11 15:20:15 by sjones           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
 int	key_press(int key, t_super *s)
@@ -11,7 +23,13 @@ int	key_press(int key, t_super *s)
 	if (key == KEY_W || key == KEY_UP)
 		I->fore = true;
 	if (key == KEY_ESCAPE)
+	{
+		if (I->music)
+			system("killall afplay");
 		exit(0);
+	}
+	if (key == KEY_M)
+		handle_music(s);
 	return (1);
 }
 
@@ -28,7 +46,7 @@ int	key_release(int key, t_super *s)
 	return (1);
 }
 
-int mouse_press(int key, int x, int y, t_super *s)
+int	mouse_press(int key, int x, int y, t_super *s)
 {
 	if (key == MOUSE_LEFT)
 		I->m_l = true;
@@ -37,7 +55,7 @@ int mouse_press(int key, int x, int y, t_super *s)
 	return (x + y);
 }
 
-int mouse_release(int key, int x, int y, t_super *s)
+int	mouse_release(int key, int x, int y, t_super *s)
 {
 	if (key == MOUSE_LEFT)
 		I->m_l = false;
@@ -46,7 +64,7 @@ int mouse_release(int key, int x, int y, t_super *s)
 	return (x + y);
 }
 
-int motion_hook(int x, int y, t_super *s)
+int	motion_hook(int x, int y, t_super *s)
 {
 	I->m_x = x - M->w / 2;
 	I->m_y = y - M->h / 2;

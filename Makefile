@@ -6,7 +6,7 @@
 #    By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/02 17:18:05 by sjones            #+#    #+#              #
-#    Updated: 2017/12/02 20:21:14 by sjones           ###   ########.fr        #
+#    Updated: 2017/12/11 12:54:55 by sjones           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC_NAME =	main.c \
 			move.c \
 			hooks.c \
 			loop_hooks.c \
-			ray_caster.c
+			ray_caster.c \
+			music.c
 
 SRC = $(addprefix $(SRC_PATH)/, $(SRC_NAME))
 OBJ =	$(SRC_NAME:%.c=%.o)
