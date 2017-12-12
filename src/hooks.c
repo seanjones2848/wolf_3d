@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:18:48 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 15:20:15 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/11 17:17:25 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	key_press(int key, t_super *s)
 		I->back = true;
 	if (key == KEY_W || key == KEY_UP)
 		I->fore = true;
+	if (key == KEY_SHIFT_LEFT || key == KEY_SHIFT_RIGHT)
+		I->shift = true;
 	if (key == KEY_ESCAPE)
 	{
 		if (I->music)
@@ -43,6 +45,8 @@ int	key_release(int key, t_super *s)
 		I->back = false;
 	if (key == KEY_W || key == KEY_UP)
 		I->fore = false;
+	if (key == KEY_SHIFT_LEFT || key == KEY_SHIFT_RIGHT)
+		I->shift = false;
 	return (1);
 }
 

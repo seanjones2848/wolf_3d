@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 17:26:02 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 15:17:01 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/11 17:32:36 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,19 @@ static int	check_end(char *file)
 static int	row_count(char **row)
 {
 	int r;
+	int i;
 
 	r = 0;
 	while (row[r])
-		r++;
+	{
+		if (!ft_isdigit(row[r][0]))
+			return (-1);
+		i = ft_atoi(row[r]);
+		if (i == 0 || i == 1)
+			r++;
+		else
+			return (-1);
+	}
 	return (r);
 }
 
@@ -55,7 +64,7 @@ static int	check_map(char *file)
 			return (1);
 		height++;
 	}
-	if (height <= 2)
+	if (height <= 2 || r_len <= 2)
 		return (1);
 	close(fd);
 	return (0);

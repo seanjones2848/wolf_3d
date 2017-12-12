@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 17:11:20 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 14:14:24 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/11 17:15:43 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct		s_input
 	bool			back;
 	bool			left;
 	bool			right;
+	bool			shift;
 	bool			draw;
 	bool			music;
 	bool			m_choice;

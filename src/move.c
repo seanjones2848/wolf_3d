@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:18:39 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 15:18:40 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/11 17:19:14 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,22 @@ void	turn(int dir, t_super *s)
 
 void	move(int dir, t_super *s)
 {
+	double	move;
+
+	move = I->shift ? (0.25) : (0.125);
 	if (dir == fore)
 	{
-		if (!W->map[(int)(W->pos_x + W->dir_x * 0.25)][(int)(W->pos_y)])
-			W->pos_x += W->dir_x * 0.25;
-		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y + W->dir_y * 0.25)])
-			W->pos_y += W->dir_y * 0.25;
+		if (!W->map[(int)(W->pos_x + W->dir_x * move)][(int)(W->pos_y)])
+			W->pos_x += W->dir_x * move;
+		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y + W->dir_y * move)])
+			W->pos_y += W->dir_y * move;
 	}
 	if (dir == back)
 	{
-		if (!W->map[(int)(W->pos_x - W->dir_x * 0.25)][(int)(W->pos_y)])
-			W->pos_x -= W->dir_x * 0.25;
-		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y - W->dir_y * 0.25)])
-			W->pos_y -= W->dir_y * 0.25;
+		if (!W->map[(int)(W->pos_x - W->dir_x * move)][(int)(W->pos_y)])
+			W->pos_x -= W->dir_x * move;
+		if (!W->map[(int)(W->pos_x)][(int)(W->pos_y - W->dir_y * move)])
+			W->pos_y -= W->dir_y * move;
 	}
 	I->draw = true;
 }
