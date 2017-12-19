@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:17:35 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 15:18:20 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/18 19:28:39 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,14 @@ static void	draw_line(t_thread *t)
 		if (t->y < t->drw_s)
 			t->data[t->x + t->img_w * t->y] = CEILING_COLOR;
 		else if (t->y < t->drw_e)
-			t->data[t->x + t->img_w * t->y] = t->side == 0 ? (WALL_COLOR) :
-			(WALL_DARK);
+		{
+			if (t->side)
+				t->data[t->x + t->img_w * t->y] = (t->rdr_y < 0) ?
+					(S_COLOR) : (N_COLOR);
+			else
+				t->data[t->x + t->img_w * t->y] = (t->rdr_x < 0) ?
+					(W_COLOR) : (E_COLOR);
+		}
 		else
 			t->data[t->x + t->img_w * t->y] = FLOOR_COLOR;
 	}

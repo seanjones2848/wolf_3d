@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 17:11:20 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 17:15:43 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/18 18:56:34 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,19 @@
 # include <stdio.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 
 # define W s->world
 # define I s->input
 # define M s->mlx
 # define WINDOW_HEIGHT 1000
 # define WINDOW_WIDTH 1000
-# define CEILING_COLOR 0x9400D3
+# define CEILING_COLOR 0xFFFF00
 # define FLOOR_COLOR 0x006400
-# define WALL_COLOR 0xFF8C00
-# define WALL_DARK 0x884600
+# define S_COLOR 0xFF8C00
+# define W_COLOR 0x884600
+# define N_COLOR 0xFF8CFF
+# define E_COLOR 0x884688
 # define MOVE_COEFF 5.0
 # define ROTATE_COEFF 3.0
 # define THREADS 1

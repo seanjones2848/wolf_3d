@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:06:10 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/11 15:17:28 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/18 18:26:51 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@ static t_world	*init_world(char *file)
 	if (!(w = ft_memalloc(sizeof(*w))))
 		exit(-1);
 	load_map(w, file);
-	w->pos_x = w->map_w / 2;
-	w->pos_y = w->map_h / 2;
+	w->pos_x = (double)(w->map_h / 2) + .5;
+	w->pos_y = (double)(w->map_w / 2) + .5;
+	if (w->map[(int)w->pos_x][(int)w->pos_y] != 0)
+	{
+		write(1, "Make sure middle of map is free\n", 32);
+		exit(-1);
+	}
 	w->dir_x = -1;
 	w->pln_y = 0.66;
 	return (w);
