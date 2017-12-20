@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 17:11:20 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/18 18:56:34 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/20 15:52:21 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int					mouse_press(int key, int x, int y, t_super *s);
 int					mouse_release(int key, int x, int y, t_super *s);
 int					motion_hook(int x, int y, t_super *s);
 int					expose_hook(t_super *s);
+int					exit_hook(t_super *s);
 int					loop_hook(t_super *s);
 int					handle_music(t_super *s);
 
