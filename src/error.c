@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 17:26:02 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/20 15:54:18 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/20 15:59:23 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,20 @@ static int	row_count(char **row, int f)
 	r = 0;
 	while (row[r])
 	{
-		if (!ft_isdigit(row[r][0]))
+		if (!ft_isdigit(row[r][0]) && free_2char(row))
 			return (-1);
 		i = ft_atoi(row[r]);
-		if (f && i == 1)
-			r++;
-		else if (f == 0 && (i == 0 || i == 1))
+		if ((f && i == 1) || (f == 0 && (i == 0 || i == 1)))
 			r++;
 		else
+		{
+			free_2char(row);
 			return (-1);
+		}
 	}
-	if (row[0][0] != '1' || row[r - 1][0] != '1')
+	if ((row[0][0] != '1' || row[r - 1][0] != '1') && free_2char(row))
 		return (-1);
+	free_2char(row);
 	return (r);
 }
 

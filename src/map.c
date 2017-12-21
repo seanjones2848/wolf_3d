@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:23:38 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/02 20:25:55 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/20 16:00:32 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	get_map_details(t_world *w, char *file)
 	while (row[++i])
 		w->map_w++;
 	close(fd);
-	free(row);
+	free_2char(row);
 }
 
 static void	load_row(t_world *w, int i, char **row)
@@ -39,7 +39,7 @@ static void	load_row(t_world *w, int i, char **row)
 		exit(-1);
 	while (row[++j])
 		w->map[i][j] = ft_atoi(row[j]);
-	free(row);
+	free_2char(row);
 }
 
 void		load_map(t_world *w, char *file)
