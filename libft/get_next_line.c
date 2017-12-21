@@ -3,91 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sjones <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/23 13:24:41 by sjones            #+#    #+#             */
-/*   Updated: 2017/02/20 17:17:54 by sjones           ###   ########.fr       */
+/*   Created: 2017/12/20 18:14:57 by sjones            #+#    #+#             */
+/*   Updated: 2017/12/20 18:15:00 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_stor	**getinit(t_stor **get, int fd)
+static int	input_line(char **input, char **line, int fd, int ret)
 {
-	if (!get)
-		get = (t_stor**)ft_memalloc((sizeof(t_stor*) * MAX_FD));
-	get[fd] = (t_stor*)ft_memalloc(sizeof(t_stor));
-	get[fd]->rl = 0;
-	get[fd]->lo = 0;
-	get[fd]->t = 0;
-	return (get);
+	char	*temp;
+	int		len;
+
+	len = 0;
+	while (input[fd][len] && input[fd][len] != '\n')
+		len++;
+	if (input[fd][len] == '\n')
+	{
+		*line = ft_strsub(input[fd], 0, len);
+		temp = ft_strdup(input[fd] + len + 1);
+		free(input[fd]);
+		input[fd] = temp;
+	}
+	else if (!input[fd][len])
+	{
+		if (ret == BUFF_SIZE)
+			return (0);
+		*line = ft_strdup(input[fd]);
+		free(input[fd]);
+		input[fd] = NULL;
+	}
+	return (1);
 }
 
-int		putline(t_stor *get, char *s, char **line)
+int			get_next_line(const int fd, char **line)
 {
-	if (!get || !s || !line)
+	static char		*input[5000];
+	char			*temp;
+	char			buf[BUFF_SIZE + 1];
+	int				ret;
+
+	if (fd < 0 || !line)
 		return (-1);
-	get->t = s;
-	if (*(get->t) && (ft_strchr(get->t, '\n') != NULL))
+	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		*line = ft_strndup(get->t, (ft_strchr(get->t, '\n') - s));
-		get->lo = ft_strdup(ft_strchr(get->t, '\n') + 1);
-		if (ft_strcmp(get->t, get->buff) != 0)
-			free(get->t);
-		return (1);
+		if (!input[fd])
+			input[fd] = ft_strnew(0);
+		buf[ret] = '\0';
+		temp = ft_strjoin(input[fd], buf);
+		free(input[fd]);
+		input[fd] = temp;
+		if (ft_strchr(buf, '\n'))
+			break ;
 	}
-	if (*(get->t) && (get->rl < BUFF_SIZE))
-	{
-		*line = ft_strdup(get->t);
-		get->lo = NULL;
-		if (ft_strcmp(get->t, get->buff) != 0)
-			free(get->t);
-		return (1);
-	}
-	return (0);
-}
-
-void	buff_join(t_stor *get)
-{
-	get->t = get->lo;
-	get->lo = ft_strjoin(get->t, get->buff);
-	if (*get->t)
-		free(get->t);
-}
-
-void	helper(t_stor *get)
-{
-	if (!(get->lo))
-		get->lo = ft_strdup(get->buff);
-	else
-		buff_join(get);
-}
-
-int		get_next_line(int fd, char **line)
-{
-	static t_stor	**get;
-
-	if (fd < 0 || !line || fd > MAX_FD)
+	if (ret < 0)
 		return (-1);
-	if (!get || !get[fd])
-		get = getinit(get, fd);
-	if (putline(get[fd], get[fd]->lo, line) == 1)
-		return (1);
-	while ((get[fd]->rl = read(fd, get[fd]->buff, BUFF_SIZE)) || get[fd]->lo)
-	{
-		if ((int)get[fd]->rl == -1)
-			return (-1);
-		get[fd]->buff[get[fd]->rl] = '\0';
-		if (ft_strchr(get[fd]->buff, '\n') || get[fd]->rl < BUFF_SIZE)
-		{
-			if (get[fd]->lo)
-			{
-				buff_join(get[fd]);
-				return (putline(get[fd], get[fd]->lo, line));
-			}
-			return (putline(get[fd], get[fd]->buff, line));
-		}
-		helper(get[fd]);
-	}
-	return (0);
+	else if (!ret && (!input[fd] || !input[fd][0]))
+		return (0);
+	return (input_line(input, line, fd, ret));
 }

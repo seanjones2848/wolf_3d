@@ -3,61 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlevine <rlevine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/02 17:41:20 by rlevine           #+#    #+#             */
-/*   Updated: 2017/07/02 17:46:26 by rlevine          ###   ########.fr       */
+/*   Created: 2017/12/20 18:14:40 by sjones            #+#    #+#             */
+/*   Updated: 2017/12/20 18:14:42 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "libft.h"
 
-static	int		ft_wordcount(char const *s, char c)
+static size_t	ft_count_words(const char *s, char c)
 {
-	int		prev;
-	int		count;
+	size_t	count;
 
-	prev = 0;
 	count = 0;
-	while (*s)
+	while (s && *s)
 	{
-		if (prev == 1 && c == *s)
-			prev = 0;
-		if (prev == 0 && c != *s)
+		if (*s != c)
 		{
-			prev = 1;
-			count++;
+			++count;
+			s = ft_strchr(s, c);
 		}
-		s++;
+		else
+			++s;
 	}
 	return (count);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(const char *s, char c)
 {
-	int		sholder;
-	char	**new_s;
-	int		i;
-	int		j;
-	int		begin;
+	size_t	current_word;
+	size_t	word_count;
+	char	**words;
+	char	*next;
 
-	i = 0;
-	j = -1;
-	if (s == 0 || c == 0)
+	word_count = ft_count_words(s, c);
+	words = (char **)ft_memalloc(sizeof(char*) * (word_count + 1));
+	if (!words)
 		return (NULL);
-	sholder = ft_wordcount(s, c);
-	if (!(new_s = malloc((sizeof(char*) * (sholder + 1)))))
-		return (NULL);
-	while (++j < sholder)
+	current_word = 0;
+	while (current_word < word_count)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		begin = i;
-		while (s[i] && s[i] != c)
-			i++;
-		new_s[j] = malloc(sizeof(char*) * ((i - begin) + 1));
-		new_s[j] = ft_strsub(s, begin, i - begin);
+		while (*s == c)
+			++s;
+		next = ft_strchr(s, c);
+		if (next)
+			words[current_word] = ft_strsub(s, 0, next - s);
+		else
+			words[current_word] = ft_strdup(s);
+		s = next;
+		++current_word;
 	}
-	new_s[j] = NULL;
-	return (new_s);
+	return (words);
 }

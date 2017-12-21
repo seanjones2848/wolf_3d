@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 17:26:02 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/20 15:59:23 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/20 18:12:45 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static int	row_count(char **row, int f)
 			return (-1);
 		}
 	}
-	if ((row[0][0] != '1' || row[r - 1][0] != '1') && free_2char(row))
+	if ((row[0][0] != '1' || row[r - 1][0] != '1'))
 		return (-1);
 	free_2char(row);
 	return (r);
 }
 
-static int	check_map(char *file)
+static int	check_map(char *file, int h)
 {
 	int		fd;
 	char	*row;
@@ -64,8 +64,9 @@ static int	check_map(char *file)
 
 	height = 0;
 	fd = open(file, O_RDONLY);
-	if (get_next_line(fd, &row) > 0)
-		r_len = row_count(ft_strsplit(row, ' '), 1);
+	if ((get_next_line(fd, &row) > 0) &&
+			(r_len = row_count(ft_strsplit(row, ' '), 1)))
+		free(row);
 	else
 		return (1);
 	while (get_next_line(fd, &row) > 0)
@@ -73,7 +74,8 @@ static int	check_map(char *file)
 		r_len2 = row_count(ft_strsplit(row, ' '), 0);
 		if (r_len != r_len2)
 			return (1);
-		height++;
+		if (++height != h)
+			free(row);
 	}
 	if (height < 2 || r_len < 2 || row_count(ft_strsplit(row, ' '), 1) == -1)
 		return (1);
@@ -83,7 +85,19 @@ static int	check_map(char *file)
 
 int			handle_error(char *file)
 {
-	if (check_end(file) || check_map(file))
+	char	*line;
+	int		fd;
+	int		h;
+
+	h = 0;
+	fd = open(file, O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+	{
+		h++;
+		free(line);
+	}
+	close(fd);
+	if (check_end(file) || check_map(file, h - 1))
 		return (1);
 	return (0);
 }
