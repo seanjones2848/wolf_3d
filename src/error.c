@@ -6,7 +6,7 @@
 /*   By: sjones <sjones@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 17:26:02 by sjones            #+#    #+#             */
-/*   Updated: 2017/12/20 18:12:45 by sjones           ###   ########.fr       */
+/*   Updated: 2017/12/21 15:58:29 by sjones           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	check_map(char *file, int h)
 	}
 	if (height < 2 || r_len < 2 || row_count(ft_strsplit(row, ' '), 1) == -1)
 		return (1);
+	free(row);
 	close(fd);
 	return (0);
 }
